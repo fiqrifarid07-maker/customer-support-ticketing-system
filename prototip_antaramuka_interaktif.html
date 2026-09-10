@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IQ-TECH HELPDESK - Switch Network Support Portal</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-slate-200 font-sans text-slate-800 min-h-screen flex flex-col">
+
+  <!-- TOP NAVIGATION BAR -->
+  <header class="bg-slate-900 text-slate-100 shadow-md sticky top-0 z-50 border-b-2 border-red-600">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-2">
+      <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 rounded-lg bg-gradient-to-tr from-red-600 to-slate-400 flex items-center justify-center text-white shadow-md">
+          <i class="fa-solid fa-network-wired text-xl"></i>
+        </div>
+        <div class="flex flex-col">
+          <span class="font-bold text-lg tracking-wide text-white leading-none">IQ-TECH HELPDESK</span>
+          <span class="text-[10px] text-slate-300 font-medium tracking-wider uppercase mt-1">Network Switch & Infrastructure Support Portal</span>
+        </div>
+        <span class="bg-red-600/30 text-red-300 border border-red-500/40 text-xs px-2.5 py-0.5 rounded-full uppercase tracking-wider font-semibold">Switch Support</span>
+      </div>
+
+      <!-- PAGE SELECTOR FOR SCREENSHOTS & TESTING -->
+      <div class="flex items-center space-x-2 text-sm">
+        <label for="pageSelector" class="text-slate-300 font-medium">Jump to Screen:</label>
+        <select id="pageSelector" onchange="switchView(this.value)" class="bg-slate-800 border border-slate-700 text-white rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-red-500 font-sans text-xs sm:text-sm shadow-inner">
+          <optgroup label="Authentication">
+            <option value="loginPage">1. Login Page</option>
+            <option value="registerPage">2. Customer Registration Page</option>
+          </optgroup>
+          <optgroup label="Customer Portal">
+            <option value="customerDashboard">3. Customer Dashboard</option>
+            <option value="createTicketPage">4. Create Ticket Page</option>
+            <option value="myTicketsPage">5. My Tickets Page</option>
+            <option value="customerTicketDetails">6. Ticket Details / Conversation (Customer)</option>
+          </optgroup>
+          <optgroup label="Support Staff Portal">
+            <option value="supportDashboard">7. Support Dashboard</option>
+            <option value="ticketManagementPage">8. Ticket Management Page</option>
+            <option value="supportTicketDetails">9. Support Ticket Details Page</option>
+          </optgroup>
+        </select>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTAINER FOR VIEWS -->
+  <main class="flex-grow p-4 md:p-8 max-w-7xl mx-auto w-full">
+
+    <!-- 1. LOGIN PAGE -->
+    <section id="loginPage" class="view-screen flex justify-center items-center py-10">
+      <div class="bg-white p-8 rounded-xl shadow-xl border border-slate-300 w-full max-w-md">
+        <div class="text-center mb-6">
+          <div class="w-14 h-14 bg-red-100 text-red-600 rounded-full flex items-center justify-center mx-auto mb-3 shadow-inner">
+            <i class="fa-solid fa-lock text-2xl"></i>
+          </div>
+          <h2 class="text-2xl font-bold text-slate-800">Account Login</h2>
+          <p class="text-slate-500 text-sm mt-1">Access IQ-TECH Switch Support Portal</p>
+        </div>
+        <form onsubmit="event.preventDefault(); switchView('customerDashboard');">
+          <div class="mb-4">
+            <label class="block text-slate-700 text-xs font-bold uppercase mb-2">Email Address</label>
+            <input type="email" value="network.admin@company.com" class="w-full px-4 py-2 border border-slate-300 rounded-lg text-slate-800 focus:outline-none focus:ring-2 focus:ring-red-500" required>
+          </div>
+          <div class="mb-6">
+            <label class="block text-slate-700 text-xs font-bold uppercase mb-2">Password</label>
+            <input type="password" value="••••••••" class="w-full px-4 py-2 border border-slate-300 rounded-lg text-slate-800 focus:outline-none focus:ring-2 focus:ring-red-500" required>
+          </div>
+          <button type="submit" class="w-full bg-red-600 hover:bg-red-700 text-white font-semibold py-2.5 rounded-lg transition duration-200 shadow-md">Sign In</button>
+        </form>
+        <div class="mt-6 text-center text-sm text-slate-500">
+          Don't have an account? <a href="#" onclick="switchView('registerPage')" class="text-red-600 font-semibold hover:underline">Register here</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. CUSTOMER REGISTRATION PAGE -->
+    <section id="registerPage" class="view-screen hidden flex justify-center items-center py-10">
+      <div class="bg-white p-8 rounded-xl shadow-xl border border-slate-300 w-full max-w-md">
+        <div class="text-center mb-6">
+          <div class="w-14 h-14 bg-red-100 text-red-600 rounded-full flex items-center justify-center mx-auto mb-3 shadow-inner">
+            <i class="fa-solid fa-user-plus text-2xl"></i>
+          </div>
+          <h2 class="text-2xl font-bold text-slate-800">Create Account</h2>
+          <p class="text-slate-500 text-sm mt-1">Register for Switch Infrastructure access</p>
+        </div>
+        <form onsubmit="event.preventDefault(); switchView('loginPage');">
+          <div class="mb-4">
+            <label class="block text-slate-700 text-xs font-bold uppercase mb-2">Full Name</label>
+            <input type="text" placeholder="Alex Smith" class="w-full px-4 py-2 border border-slate-300 rounded-lg text-slate-800 focus:outline-none focus:ring-2 focus:ring-red-500" required>
+          </div>
+          <div class="mb-4">
+            <label class="block text-slate-700 text-xs font-bold uppercase mb-2">Email Address</label>
+            <input type="email" placeholder="alex@company.com" class="w-full px-4 py-2 border border-slate-300 rounded-lg text-slate-800 focus:outline-none focus:ring-2 focus:ring-red-500" required>
+          </div>
+          <div class="mb-4">
+            <label class="block text-slate-700 text-xs font-bold uppercase mb-2">Password</label>
+            <input type="password" placeholder="••••••••" class="w-full px-4 py-2 border border-slate-300 rounded-lg text-slate-800 focus:outline-none focus:ring-2 focus:ring-red-500" required>
+          </div>
+          <div class="mb-6">
+            <label class="block text-slate-700 text-xs font-bold uppercase mb-2">Confirm Password</label>
+            <input type="password" placeholder="••••••••" class="w-full px-4 py-2 border border-slate-300 rounded-lg text-slate-800 focus:outline-none focus:ring-2 focus:ring-red-500" required>
+          </div>
+          <button type="submit" class="w-full bg-red-600 hover:bg-red-700 text-white font-semibold py-2.5 rounded-lg transition duration-200 shadow-md">Create Account</button>
+        </form>
+        <div class="mt-6 text-center text-sm text-slate-500">
+          Already have an account? <a href="#" onclick="switchView('loginPage')" class="text-red-600 font-semibold hover:underline">Log in</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. CUSTOMER DASHBOARD -->
+    <section id="customerDashboard" class="view-screen hidden space-y-6">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-6 rounded-xl shadow-sm border border-slate-300">
+        <div>
+          <h1 class="text-2xl font-bold text-slate-800">Welcome Back, Alex!</h1>
+          <p class="text-slate-500 text-sm">Customer Portal Overview & Switch Infrastructure Statistics</p>
+        </div>
+        <div class="flex flex-wrap gap-3">
+          <button onclick="switchView('createTicketPage')" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2.5 rounded-lg font-medium flex items-center space-x-2 text-sm shadow-md transition">
+            <i class="fa-solid fa-network-wired"></i> <span>Report Switch Issue</span>
+          </button>
+          <button onclick="switchView('myTicketsPage')" class="bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-300 px-4 py-2.5 rounded-lg font-medium text-sm transition">
+            View My Tickets
+          </button>
+        </div>
+      </div>
+
+      <!-- Quick Stats -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-white p-5 rounded-xl border border-slate-300 shadow-sm flex items-center justify-between">
+          <div>
+            <p class="text-xs font-bold text-slate-400 uppercase">Total Tickets</p>
+            <p class="text-2xl font-bold text-slate-800 mt-1">14</p>
+          </div>
+          <div class="w-10 h-10 bg-red-50 text-red-600 rounded-lg flex items-center justify-center">
+            <i class="fa-solid fa-ticket"></i>
+          </div>
+        </div>
+        <div class="bg-white p-5 rounded-xl border border-slate-300 shadow-sm flex items-center justify-between">
+          <div>
+            <p class="text-xs font-bold text-amber-500 uppercase">In Progress / Diagnostics</p>
+            <p class="text-2xl font-bold text-amber-600 mt-1">3</p>
+          </div>
+          <div class="w-10 h-10 bg-amber-50 text-amber-600 rounded-lg flex items-center justify-center">
+            <i class="fa-solid fa-sliders"></i>
+          </div>
+        </div>
+        <div class="bg-white p-5 rounded-xl border border-slate-300 shadow-sm flex items-center justify-between">
+          <div>
+            <p class="text-xs font-bold text-blue-500 uppercase">Waiting Parts / Info</p>
+            <p class="text-2xl font-bold text-blue-600 mt-1">1</p>
+          </div>
+          <div class="w-10 h-10 bg-blue-50 text-blue-600 rounded-lg flex items-center justify-center">
+            <i class="fa-solid fa-clock font-bold"></i>
+          </div>
+        </div>
+        <div class="bg-white p-5 rounded-xl border border-slate-300 shadow-sm flex items-center justify-between">
+          <div>
+            <p class="text-xs font-bold text-emerald-500 uppercase">Resolved / Closed</p>
+            <p class="text-2xl font-bold text-emerald-600 mt-1">10</p>
+          </div>
+          <div class="w-10 h-10 bg-emerald-50 text-emerald-600 rounded-lg flex items-center justify-center">
+            <i class="fa-solid fa-circle-check"></i>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Tickets Preview -->
+      <div class="bg-white rounded-xl shadow-sm border border-slate-300 p-6">
+        <h3 class="font-bold text-slate-800 text-lg mb-4">Recent Network & Switch Support Requests</h3>
+        <div class="space-y-3">
+          <div onclick="switchView('customerTicketDetails')" class="p-4 border border-slate-200 bg-slate-50 hover:bg-red-50/30 rounded-lg cursor-pointer flex justify-between items-center transition">
+            <div>
+              <div class="flex items-center gap-2 flex-wrap">
+                <span class="font-bold text-red-600">#TCK-1096</span>
+                <span class="text-xs bg-slate-200 text-slate-700 px-2 py-0.5 rounded font-mono"><i class="fa-solid fa-network-wired text-slate-500 mr-1"></i>SW-CORE-9942</span>
+                <span class="text-xs bg-red-100 text-red-700 px-2 py-0.5 rounded-full font-semibold">Switch Hardware</span>
+                <span class="text-xs bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full font-semibold">In Progress</span>
+              </div>
+              <h4 class="font-semibold text-slate-800 mt-1">Core Switch Port Flapping & SFP+ 10G Link Degradation</h4>
+              <p class="text-xs text-slate-400 mt-1">Submitted: 30 mins ago • Category: Switch Hardware (SFP / Fiber Uplink)</p>
+            </div>
+            <i class="fa-solid fa-chevron-right text-slate-400"></i>
+          </div>
+
+          <div onclick="switchView('customerTicketDetails')" class="p-4 border border-slate-200 bg-slate-50 hover:bg-red-50/30 rounded-lg cursor-pointer flex justify-between items-center transition">
+            <div>
+              <div class="flex items-center gap-2 flex-wrap">
+                <span class="font-bold text-red-600">#TCK-1092</span>
+                <span class="text-xs bg-slate-200 text-slate-700 px-2 py-0.5 rounded font-mono"><i class="fa-solid fa-network-wired text-slate-500 mr-1"></i>SW-ACC-204</span>
+                <span class="text-xs bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full font-semibold">In Progress</span>
+              </div>
+              <h4 class="font-semibold text-slate-800 mt-1">PoE Port Budget Overdraw on Floor 2 Access Switch</h4>
+              <p class="text-xs text-slate-400 mt-1">Submitted: 2 hours ago • Category: PoE & Power Supply</p>
+            </div>
+            <i class="fa-solid fa-chevron-right text-slate-400"></i>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. CREATE TICKET PAGE -->
+    <section id="createTicketPage" class="view-screen hidden max-w-3xl mx-auto">
+      <div class="bg-white p-8 rounded-xl shadow-md border border-slate-300">
+        <div class="flex items-center space-x-3 mb-6">
+          <button onclick="switchView('customerDashboard')" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-arrow-left text-lg"></i></button>
+          <div>
+            <h2 class="text-2xl font-bold text-slate-800">Submit New Switch / Network Ticket</h2>
+            <p class="text-slate-500 text-sm">Report network switch hardware faults, port failures, SFP module errors, or VLAN routing issues</p>
+          </div>
+        </div>
+        <form onsubmit="event.preventDefault(); switchView('myTicketsPage');">
+          <div class="mb-5">
+            <label class="block text-slate-700 font-semibold text-sm mb-2">Subject / Issue Title *</label>
+            <input type="text" placeholder="e.g. Switch port flapping, SFP transceiver fault, PoE failure on Access Switch" class="w-full px-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:outline-none" required>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-5">
+            <div>
+              <label class="block text-slate-700 font-semibold text-sm mb-2">Category *</label>
+              <select id="ticketCategory" onchange="toggleSwitchFields(this.value)" class="w-full px-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:outline-none">
+                <option value="Switch Hardware">Switch Hardware & Ports</option>
+                <option value="Switch Firmware">Switch Firmware & OS</option>
+                <option value="VLAN & Trunking">VLAN & Trunking Configuration</option>
+                <option value="PoE & Power">PoE & Power Budget</option>
+                <option value="SFP & Fiber Uplink">Uplink & Fiber Transceiver (SFP/SFP+)</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-slate-700 font-semibold text-sm mb-2">Priority Level *</label>
+              <select class="w-full px-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:outline-none">
+                <option value="Low">Low (General Inquiry / Port Tagging)</option>
+                <option value="Medium" selected>Medium (Single Port Fault / Intermittent Lag)</option>
+                <option value="High">High (Access Switch Down / Multiple APs offline)</option>
+                <option value="Urgent">Urgent (Core Switch Failure / Server Room Outage)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- SWITCH TICKETING SPECIFIC FIELDS -->
+          <div id="switchDetailsBox" class="p-4 bg-slate-50 rounded-xl border border-slate-300 mb-5 space-y-4">
+            <div class="flex items-center space-x-2 text-red-600 font-bold text-sm">
+              <i class="fa-solid fa-network-wired"></i>
+              <span>Switch / Network Hardware Asset Details</span>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Switch Asset Tag / Hostname</label>
+                <input type="text" placeholder="e.g. SW-CORE-9942 or SW-ACC-204" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm bg-white focus:ring-2 focus:ring-red-500 focus:outline-none">
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Switch Type / Category</label>
+                <select class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm bg-white focus:ring-2 focus:ring-red-500 focus:outline-none">
+                  <option>Managed Layer 3 Core Switch</option>
+                  <option>Layer 2 Access Switch</option>
+                  <option>PoE+ Gigabit Edge Switch</option>
+                  <option>Modular Chassis Switch</option>
+                  <option>Industrial DIN-Rail Switch</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Affected Component / Port</label>
+                <select class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm bg-white focus:ring-2 focus:ring-red-500 focus:outline-none">
+                  <option>SFP+ 10G Fiber Uplink Port</option>
+                  <option>PoE Power Supply Unit (PSU)</option>
+                  <option>RJ45 Ethernet Port Bank (1-24 / 25-48)</option>
+                  <option>Switch Stacking Module / Cable</option>
+                  <option>Switch Management Console / Web GUI</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Switch OS / Firmware Version</label>
+                <select class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm bg-white focus:ring-2 focus:ring-red-500 focus:outline-none">
+                  <option>Cisco IOS-XE 17.09.04a</option>
+                  <option>ArubaOS-CX 10.12.1000</option>
+                  <option>Juniper Junos OS 22.4R1</option>
+                  <option>Enterprise SwitchOS v4.2</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Quick Switch Diagnostic Checklist -->
+            <div>
+              <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Switch Pre-Diagnostic Checklist</label>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-slate-700">
+                <label class="flex items-center space-x-2">
+                  <input type="checkbox" class="rounded border-slate-300 text-red-600 focus:ring-red-500">
+                  <span>Switch Power / SYST LED flashing amber</span>
+                </label>
+                <label class="flex items-center space-x-2">
+                  <input type="checkbox" class="rounded border-slate-300 text-red-600 focus:ring-red-500">
+                  <span>PoE budget overdraw (Access Points offline)</span>
+                </label>
+                <label class="flex items-center space-x-2">
+                  <input type="checkbox" class="rounded border-slate-300 text-red-600 focus:ring-red-500">
+                  <span>Port link flapping (Up/Down continuously)</span>
+                </label>
+                <label class="flex items-center space-x-2">
+                  <input type="checkbox" class="rounded border-slate-300 text-red-600 focus:ring-red-500">
+                  <span>Broadcast storm / high packet drop rate</span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-5">
+            <label class="block text-slate-700 font-semibold text-sm mb-2">Detailed Description *</label>
+            <textarea rows="4" placeholder="Describe switch port symptoms, error logs (CLI/Syslog), affected IP subnets/VLANs, or steps leading to the failure..." class="w-full px-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:outline-none" required></textarea>
+          </div>
+          <div class="flex justify-end gap-3">
+            <button type="button" onclick="switchView('customerDashboard')" class="px-5 py-2.5 border border-slate-300 text-slate-600 rounded-lg hover:bg-slate-100 font-medium">Cancel</button>
+            <button type="submit" class="px-6 py-2.5 bg-red-600 text-white rounded-lg hover:bg-red-700 font-medium shadow-md transition">Submit Switch Ticket</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- 5. MY TICKETS PAGE -->
+    <section id="myTicketsPage" class="view-screen hidden space-y-6">
+      <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4">
+        <div>
+          <h1 class="text-2xl font-bold text-slate-800">My Switch & Network Tickets</h1>
+          <p class="text-slate-500 text-sm">Track active and past network switch repair and configuration requests</p>
+        </div>
+        <button onclick="switchView('createTicketPage')" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-medium text-sm flex items-center justify-center space-x-2 shadow-md transition">
+          <i class="fa-solid fa-plus"></i> <span>New Switch Ticket</span>
+        </button>
+      </div>
+
+      <div class="bg-white rounded-xl shadow-sm border border-slate-300 overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse text-sm">
+            <thead class="bg-slate-900 text-slate-100 uppercase text-xs">
+              <tr>
+                <th class="p-4">Ticket ID</th>
+                <th class="p-4">Switch Hostname</th>
+                <th class="p-4">Subject</th>
+                <th class="p-4">Category</th>
+                <th class="p-4">Priority</th>
+                <th class="p-4">Status</th>
+                <th class="p-4">Date</th>
+                <th class="p-4 text-center">Action</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-200">
+              <tr class="hover:bg-slate-50">
+                <td class="p-4 font-bold text-red-600">#TCK-1096</td>
+                <td class="p-4 font-mono text-xs"><span class="bg-slate-100 px-2 py-1 rounded border border-slate-300 font-semibold text-slate-700">SW-CORE-9942</span></td>
+                <td class="p-4 font-medium text-slate-800">Core Switch Port Flapping & SFP+ 10G Link Loss</td>
+                <td class="p-4 text-slate-500">Switch Hardware</td>
+                <td class="p-4"><span class="bg-red-100 text-red-700 text-xs px-2 py-1 rounded font-semibold">Urgent</span></td>
+                <td class="p-4"><span class="bg-amber-100 text-amber-700 text-xs px-2.5 py-1 rounded-full font-semibold">In Progress</span></td>
+                <td class="p-4 text-slate-400 text-xs">27 Aug 2026</td>
+                <td class="p-4 text-center">
+                  <button onclick="switchView('customerTicketDetails')" class="text-red-600 hover:text-red-800 font-semibold">View</button>
+                </td>
+              </tr>
+              <tr class="hover:bg-slate-50">
+                <td class="p-4 font-bold text-red-600">#TCK-1092</td>
+                <td class="p-4 font-mono text-xs"><span class="bg-slate-100 px-2 py-1 rounded border border-slate-300 font-semibold text-slate-700">SW-ACC-204</span></td>
+                <td class="p-4 font-medium text-slate-800">PoE Port Budget Overdraw on Floor 2 Access Switch</td>
+                <td class="p-4 text-slate-500">PoE & Power</td>
+                <td class="p-4"><span class="bg-red-100 text-red-700 text-xs px-2 py-1 rounded font-semibold">High</span></td>
+                <td class="p-4"><span class="bg-amber-100 text-amber-700 text-xs px-2.5 py-1 rounded-full font-semibold">In Progress</span></td>
+                <td class="p-4 text-slate-400 text-xs">27 Aug 2026</td>
+                <td class="p-4 text-center">
+                  <button onclick="switchView('customerTicketDetails')" class="text-red-600 hover:text-red-800 font-semibold">View</button>
+                </td>
+              </tr>
+              <tr class="hover:bg-slate-50">
+                <td class="p-4 font-bold text-red-600">#TCK-1088</td>
+                <td class="p-4 font-mono text-xs"><span class="bg-slate-100 px-2 py-1 rounded border border-slate-300 font-semibold text-slate-700">SW-DIST-01</span></td>
+                <td class="p-4 font-medium text-slate-800">Request for VLAN 50 Tagging on Trunk Port 48</td>
+                <td class="p-4 text-slate-500">VLAN Config</td>
+                <td class="p-4"><span class="bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded font-semibold">Medium</span></td>
+                <td class="p-4"><span class="bg-blue-100 text-blue-700 text-xs px-2.5 py-1 rounded-full font-semibold">Waiting Customer</span></td>
+                <td class="p-4 text-slate-400 text-xs">26 Aug 2026</td>
+                <td class="p-4 text-center">
+                  <button onclick="switchView('customerTicketDetails')" class="text-red-600 hover:text-red-800 font-semibold">View</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. TICKET DETAILS / CONVERSATION PAGE (CUSTOMER VIEW) -->
+    <section id="customerTicketDetails" class="view-screen hidden space-y-6 max-w-4xl mx-auto">
+      <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-300">
+        <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4 pb-4 border-b border-slate-200">
+          <div>
+            <div class="flex items-center space-x-2 flex-wrap gap-y-1">
+              <span class="text-xs font-bold bg-red-100 text-red-700 px-2 py-0.5 rounded">#TCK-1096</span>
+              <span class="text-xs font-semibold bg-amber-100 text-amber-700 px-2.5 py-0.5 rounded-full">In Progress</span>
+              <span class="text-xs font-mono bg-slate-100 text-slate-700 px-2 py-0.5 rounded border border-slate-300">Switch: SW-CORE-9942</span>
+            </div>
+            <h2 class="text-xl font-bold text-slate-800 mt-2">Core Switch Port Flapping & SFP+ 10G Link Loss</h2>
+          </div>
+          <button onclick="switchView('myTicketsPage')" class="text-sm border border-slate-300 px-3 py-1.5 rounded text-slate-600 hover:bg-slate-50 flex items-center space-x-1">
+            <i class="fa-solid fa-arrow-left"></i> <span>Back to List</span>
+          </button>
+        </div>
+
+        <!-- Switch Spec Information Summary Card -->
+        <div class="my-4 p-4 bg-slate-50 rounded-lg border border-slate-200 text-xs grid grid-cols-2 sm:grid-cols-4 gap-3 text-slate-700">
+          <div>
+            <span class="block text-slate-400 font-bold uppercase">Switch Model</span>
+            <span class="font-semibold">Cisco Catalyst 9300 48P PoE+</span>
+          </div>
+          <div>
+            <span class="block text-slate-400 font-bold uppercase">Firmware Version</span>
+            <span class="font-semibold">IOS-XE 17.09.04a</span>
+          </div>
+          <div>
+            <span class="block text-slate-400 font-bold uppercase">Ports & Uplinks</span>
+            <span class="font-semibold">48x GbE PoE+ / 4x 10G SFP+</span>
+          </div>
+          <div>
+            <span class="block text-slate-400 font-bold uppercase">SmartNet Warranty</span>
+            <span class="font-semibold text-emerald-600"><i class="fa-solid fa-shield-check"></i> Active (24/7 NBD)</span>
+          </div>
+        </div>
+
+        <!-- Conversation Timeline -->
+        <div class="py-4 space-y-4">
+          <!-- Initial Post -->
+          <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+            <div class="flex justify-between items-center mb-2">
+              <span class="font-bold text-slate-800 text-sm">Alex (Network Admin)</span>
+              <span class="text-xs text-slate-400">27 Aug 2026, 02:15 PM</span>
+            </div>
+            <p class="text-slate-700 text-sm">Hi Switch Support team, core switch <code class="bg-slate-200 px-1 py-0.5 rounded font-mono text-xs">SW-CORE-9942</code> port SFP+ 1 is continuously link flapping (Up/Down) every 40 seconds. Syslog reports <code class="bg-slate-200 px-1 py-0.5 rounded font-mono text-xs">TRANSCEIVER-3-OPTICAL_RECEIVE_FAULT</code> on 10G Fiber Uplink to Server Rack 3.</p>
+          </div>
+
+          <!-- Support Reply -->
+          <div class="bg-red-50/60 p-4 rounded-lg border border-red-100">
+            <div class="flex justify-between items-center mb-2">
+              <span class="font-bold text-red-900 text-sm">David (Network Switch Engineer)</span>
+              <span class="text-xs text-slate-400">27 Aug 2026, 02:40 PM</span>
+            </div>
+            <p class="text-slate-700 text-sm">Hello Alex, thank you for filing the ticket. Optical receive fault code indicates an SFP+ module degradation or dirty LC fiber connector. A network engineer is dispatched with an OTDR optical meter and a spare Cisco 10GBASE-SR SFP+ transceiver replacement.</p>
+          </div>
+        </div>
+
+        <!-- Customer Reply Box -->
+        <form onsubmit="event.preventDefault(); alert('Reply submitted to Switch Support team!');" class="mt-4 pt-4 border-t border-slate-200">
+          <label class="block font-semibold text-sm text-slate-700 mb-2">Reply to Switch Support Team</label>
+          <textarea rows="3" placeholder="Type your message or updated switch CLI output here..." class="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:outline-none text-sm mb-3" required></textarea>
+          <div class="flex justify-end">
+            <button type="submit" class="bg-red-600 hover:bg-red-700 text-white px-5 py-2 rounded-lg text-sm font-semibold shadow-sm transition">Send Reply</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- 7. SUPPORT DASHBOARD -->
+    <section id="supportDashboard" class="view-screen hidden space-y-6">
+      <div class="bg-slate-900 text-white p-6 rounded-xl flex flex-col sm:flex-row justify-between sm:items-center gap-4 border-l-4 border-red-600 shadow-md">
+        <div>
+          <span class="bg-slate-800 text-red-400 text-xs px-2.5 py-1 rounded font-bold uppercase tracking-wider">Network & Switch Engineer Portal</span>
+          <h1 class="text-2xl font-bold mt-1">Support Staff & Switch Infrastructure Overview</h1>
+        </div>
+        <button onclick="switchView('ticketManagementPage')" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm font-medium shadow-sm transition">Manage Switch Queue</button>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="bg-white p-5 rounded-xl border border-slate-300 shadow-sm">
+          <p class="text-xs font-bold text-slate-400 uppercase">New Switch Tickets</p>
+          <p class="text-3xl font-bold text-red-600 mt-2">5</p>
+        </div>
+        <div class="bg-white p-5 rounded-xl border border-slate-300 shadow-sm">
+          <p class="text-xs font-bold text-slate-400 uppercase">Switch Diagnostics Active</p>
+          <p class="text-3xl font-bold text-amber-600 mt-2">7</p>
+        </div>
+        <div class="bg-white p-5 rounded-xl border border-slate-300 shadow-sm">
+          <p class="text-xs font-bold text-slate-400 uppercase">Pending SFP / Cable Parts</p>
+          <p class="text-3xl font-bold text-slate-700 mt-2">2</p>
+        </div>
+        <div class="bg-white p-5 rounded-xl border border-slate-300 shadow-sm">
+          <p class="text-xs font-bold text-slate-400 uppercase">Switches Serviced Today</p>
+          <p class="text-3xl font-bold text-emerald-600 mt-2">15</p>
+        </div>
+      </div>
+
+      <div class="bg-white p-6 rounded-xl border border-slate-300 shadow-sm">
+        <h3 class="font-bold text-slate-800 text-lg mb-4">Urgent Switch Hardware Queue Requiring Attention</h3>
+        <div class="space-y-3">
+          <div onclick="switchView('supportTicketDetails')" class="p-4 border border-red-200 bg-red-50/40 hover:bg-red-50 rounded-lg cursor-pointer flex justify-between items-center transition">
+            <div>
+              <div class="flex items-center gap-2 flex-wrap">
+                <span class="font-bold text-slate-800">#TCK-1096</span>
+                <span class="bg-red-600 text-white text-xs px-2 py-0.5 rounded font-bold">Urgent</span>
+                <span class="bg-slate-200 text-slate-700 text-xs font-mono px-2 py-0.5 rounded">SW-CORE-9942</span>
+                <span class="bg-slate-200 text-slate-700 text-xs px-2 py-0.5 rounded">SFP / Link Flap</span>
+              </div>
+              <p class="font-semibold text-slate-800 mt-1">Core Switch Port Flapping & SFP+ 10G Link Degradation</p>
+              <p class="text-xs text-slate-500 mt-1">Customer: Alex Smith • Server Room Rack 2 • 30 mins ago</p>
+            </div>
+            <button class="bg-slate-900 hover:bg-slate-800 text-white px-3 py-1.5 rounded text-xs transition">Dispatch Engineer</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. TICKET MANAGEMENT PAGE -->
+    <section id="ticketManagementPage" class="view-screen hidden space-y-6">
+      <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-4">
+        <div>
+          <h1 class="text-2xl font-bold text-slate-800">Support & Switch Ticket Management</h1>
+          <p class="text-slate-500 text-sm">Filter, assign, diagnose switch hardware, and update repair statuses</p>
+        </div>
+      </div>
+
+      <!-- Filters -->
+      <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-300 flex flex-wrap gap-3 items-center">
+        <input type="text" placeholder="Search Switch Hostname (e.g. SW-CORE)..." class="border border-slate-300 px-3 py-1.5 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-red-500 flex-grow max-w-xs">
+        <select class="border border-slate-300 px-3 py-1.5 rounded-lg text-sm text-slate-700">
+          <option>All Categories</option>
+          <option>Switch Hardware & Ports</option>
+          <option>Switch Firmware</option>
+          <option>VLAN & Trunking</option>
+          <option>PoE & Power</option>
+          <option>SFP & Fiber Uplink</option>
+        </select>
+        <select class="border border-slate-300 px-3 py-1.5 rounded-lg text-sm text-slate-700">
+          <option>All Statuses</option>
+          <option>New</option>
+          <option>In Progress / Diagnostics</option>
+          <option>Pending SFP Parts</option>
+          <option>Resolved</option>
+          <option>Closed</option>
+        </select>
+      </div>
+
+      <!-- Queue Table -->
+      <div class="bg-white rounded-xl shadow-sm border border-slate-300 overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse text-sm">
+            <thead class="bg-slate-900 text-slate-100 uppercase text-xs">
+              <tr>
+                <th class="p-4">ID</th>
+                <th class="p-4">Switch Hostname</th>
+                <th class="p-4">Customer</th>
+                <th class="p-4">Subject</th>
+                <th class="p-4">Priority</th>
+                <th class="p-4">Status</th>
+                <th class="p-4">Submitted</th>
+                <th class="p-4 text-center">Action</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-200">
+              <tr class="hover:bg-slate-50">
+                <td class="p-4 font-bold text-red-600">#TCK-1096</td>
+                <td class="p-4 font-mono text-xs"><span class="bg-slate-100 px-2 py-1 rounded border border-slate-300 text-slate-800 font-semibold">SW-CORE-9942</span></td>
+                <td class="p-4 font-medium">Alex Smith</td>
+                <td class="p-4">Core Switch Port Flapping & SFP+ Link Loss</td>
+                <td class="p-4"><span class="bg-red-600 text-white text-xs px-2 py-0.5 rounded font-bold">Urgent</span></td>
+                <td class="p-4"><span class="bg-amber-100 text-amber-800 text-xs px-2 py-0.5 rounded font-bold">In Progress</span></td>
+                <td class="p-4 text-xs text-slate-400">30 mins ago</td>
+                <td class="p-4 text-center">
+                  <button onclick="switchView('supportTicketDetails')" class="bg-red-600 text-white text-xs px-3 py-1 rounded hover:bg-red-700 transition">Process</button>
+                </td>
+              </tr>
+              <tr class="hover:bg-slate-50">
+                <td class="p-4 font-bold text-red-600">#TCK-1095</td>
+                <td class="p-4 font-mono text-xs"><span class="bg-slate-100 px-2 py-1 rounded border border-slate-300 text-slate-800 font-semibold">SW-DIST-01</span></td>
+                <td class="p-4 font-medium">Tech Corp Admin</td>
+                <td class="p-4">Distribution Switch Power Supply 2 Fault</td>
+                <td class="p-4"><span class="bg-red-600 text-white text-xs px-2 py-0.5 rounded font-bold">Urgent</span></td>
+                <td class="p-4"><span class="bg-red-100 text-red-800 text-xs px-2 py-0.5 rounded font-bold">New</span></td>
+                <td class="p-4 text-xs text-slate-400">15 mins ago</td>
+                <td class="p-4 text-center">
+                  <button onclick="switchView('supportTicketDetails')" class="bg-red-600 text-white text-xs px-3 py-1 rounded hover:bg-red-700 transition">Process</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9. SUPPORT TICKET DETAILS PAGE -->
+    <section id="supportTicketDetails" class="view-screen hidden space-y-6 max-w-5xl mx-auto">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- Main Conversation Area -->
+        <div class="lg:col-span-2 bg-white p-6 rounded-xl shadow-sm border border-slate-300">
+          <div class="flex justify-between items-center pb-4 border-b border-slate-200">
+            <div>
+              <div class="flex items-center space-x-2">
+                <span class="text-xs font-bold text-red-600">Ticket #TCK-1096</span>
+                <span class="text-xs font-mono bg-slate-100 px-2 py-0.5 rounded border border-slate-300 text-slate-700">SW-CORE-9942</span>
+              </div>
+              <h2 class="text-lg font-bold text-slate-800 mt-1">Core Switch Port Flapping & SFP+ 10G Link Loss</h2>
+            </div>
+            <button onclick="switchView('ticketManagementPage')" class="text-xs border border-slate-300 px-3 py-1.5 rounded text-slate-600 hover:bg-slate-50">Back to Queue</button>
+          </div>
+
+          <div class="py-6 space-y-4">
+            <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+              <div class="flex justify-between items-center mb-1">
+                <span class="font-bold text-slate-800 text-sm">Alex Smith (Network Admin - Datacenter Ops)</span>
+                <span class="text-xs text-slate-400">2:15 PM</span>
+              </div>
+              <p class="text-slate-700 text-sm">Core switch SFP+ uplink continuously dropping packets and flapping with syslog error <code class="bg-slate-200 px-1 py-0.5 rounded font-mono text-xs">TRANSCEIVER-3-OPTICAL_RECEIVE_FAULT</code>.</p>
+            </div>
+          </div>
+
+          <form onsubmit="event.preventDefault(); alert('Response sent to customer!');" class="border-t border-slate-200 pt-4">
+            <label class="block font-semibold text-sm text-slate-700 mb-2">Technician Response / Switch Diagnosis Update</label>
+            <textarea rows="3" placeholder="Write technical diagnosis, required SFP transceiver replacement, or CLI verification steps..." class="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:outline-none text-sm mb-3" required></textarea>
+            <div class="flex justify-end">
+              <button type="submit" class="bg-red-600 hover:bg-red-700 text-white px-5 py-2 rounded-lg text-sm font-semibold shadow-md transition">Post Technical Response</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Ticket Controls / Switch Asset Meta Sidebar -->
+        <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-300 space-y-5 h-fit">
+          <h3 class="font-bold text-slate-800 border-b border-slate-200 pb-2 flex items-center justify-between">
+            <span>Switch Asset & Diagnostic</span>
+            <i class="fa-solid fa-network-wired text-red-600"></i>
+          </h3>
+
+          <div class="bg-slate-50 p-3 rounded-lg border border-slate-200 text-xs space-y-2 text-slate-700">
+            <div><span class="text-slate-400 font-bold block uppercase">Switch Hostname:</span> <span class="font-mono font-bold">SW-CORE-9942</span></div>
+            <div><span class="text-slate-400 font-bold block uppercase">Model:</span> Cisco Catalyst 9300 48P</div>
+            <div><span class="text-slate-400 font-bold block uppercase">Ports & OS:</span> 48x PoE+ / IOS-XE 17.09</div>
+            <div><span class="text-slate-400 font-bold block uppercase">Stack Role:</span> Stack Member 1 (Master)</div>
+            <div><span class="text-slate-400 font-bold block uppercase">Location:</span> Datacenter Rack 02, Unit 14</div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Update Status</label>
+            <select class="w-full border border-slate-300 rounded-lg p-2 text-sm font-semibold text-slate-700">
+              <option value="New">New</option>
+              <option value="In Progress" selected>In Progress / On-site Diagnostics</option>
+              <option value="Pending Parts">Pending SFP Transceiver Parts</option>
+              <option value="Waiting for Customer">Waiting for Customer</option>
+              <option value="Resolved">Resolved / Repaired</option>
+              <option value="Closed">Closed</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Update Priority</label>
+            <select class="w-full border border-slate-300 rounded-lg p-2 text-sm font-semibold text-slate-700">
+              <option value="Low">Low</option>
+              <option value="Medium">Medium</option>
+              <option value="High">High</option>
+              <option value="Urgent" selected>Urgent (Core Uplink Down)</option>
+            </select>
+          </div>
+
+          <div class="pt-4 border-t border-slate-200 space-y-2">
+            <button onclick="alert('Switch repair marked as Resolved!');" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2 rounded-lg text-sm transition">Mark Switch Repaired & Resolved</button>
+            <button onclick="alert('Ticket Closed!');" class="w-full bg-slate-800 hover:bg-slate-900 text-white font-semibold py-2 rounded-lg text-sm transition">Close Ticket</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- JAVASCRIPT FOR DYNAMIC VIEW SWITCHING AND SWITCH FIELD TOGGLING -->
+  <script>
+    function switchView(viewId) {
+      document.querySelectorAll('.view-screen').forEach(el => el.classList.add('hidden'));
+      const target = document.getElementById(viewId);
+      if (target) {
+        target.classList.remove('hidden');
+      }
+      document.getElementById('pageSelector').value = viewId;
+      window.scrollTo(0, 0);
+    }
+
+    function toggleSwitchFields(category) {
+      const switchBox = document.getElementById('switchDetailsBox');
+      if (category.includes('Switch') || category.includes('PoE') || category.includes('VLAN') || category.includes('SFP')) {
+        switchBox.classList.remove('hidden');
+      } else {
+        switchBox.classList.add('hidden');
+      }
+    }
+  </script>
+</body>
+</html>
